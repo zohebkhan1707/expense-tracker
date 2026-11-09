@@ -1,6 +1,6 @@
 from datetime import date,datetime
 import sqlite3
-
+import os
 from expense_code import create_tables,load_expenses,add_expense_from_gui,delete_expense_by_id,delete_expenses,load_budgets,save_budgets,register_user,login_user
 import matplotlib
 matplotlib.use("Agg")
@@ -11,7 +11,7 @@ from flask import Flask, json, render_template,request,url_for,redirect,session
 from werkzeug.security import generate_password_hash, check_password_hash
 app=Flask(__name__)
 create_tables()
-app.secret_key = "3e11907399be46cb271eec301f114eed11ab71bad3064278091ae366c9d40f2d"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY")
 def load_users():
     try:
         with open("users.json", "r") as file:
