@@ -1,0 +1,13 @@
+# Databases and user data
+*.db
+*.json
+user_data/
+
+# Python generated files
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# Secrets
+.env

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Expense Tracker</title>
+        <style>
+            body{
+                background-color: #111827;
+                font-family: Arial, sans-serif;
+                color:White;
+                padding:40px;
+
+            }
+            h1{color:#60a5fa;
+            }
+
+            .expense-card{
+                background-color:#1f2937;
+                padding:25px;
+                border-radius:15px;
+                max-width:350px;
+                margin: 30px;
+            }
+            .transaction-card {
+                max-width: 500px;
+                margin: 15px 0;
+                padding: 20px;
+                border-left: 4px solid #60a5fa;
+                transition: transform 0.2s ease;
+            }
+
+            .transaction-card:hover {
+                transform: translateY(-3px);
+            }
+
+            .transaction-card h3 {
+                color: #60a5fa;
+                margin-top: 0;
+            }
+
+            .transaction-card p {
+                color: #d1d5db;
+                font-size: 14px;
+            }
+            .card-label{
+                color:#9ca3af;
+                font-size:14px;
+            }
+            .expense-card h1{
+                font-size:32px;
+                color:white;
+
+            }
+            .card-description {
+                color: #86efac;
+                font-size: 14px;
+            }
+            /* .dashboard{
+                display:flex;
+                gap:20px;
+                flex-wrap:wrap;
+                
+            } */
+            @media(max-width:600px)
+            {
+                .dashboard{
+                    flex-direction:column;
+
+                }
+
+            }
+            .dashboard 
+            {
+                display:grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+
+        
+            }
+            .spendinglayout{
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 30px;
+                align-items:start;
+                margin-top: 30px;
+
+            }
+            .spendinglayout.expense-card{
+                max-width: none;
+                margin: 15px;
+                box-sizing: border-box ;
+
+
+
+            }
+
+/* Category-wise spending section */
+                .category-section {
+                    display: grid;
+                    grid-template-columns: repeat(2, minmax(0, 1fr));
+                    gap: 15px;
+                    align-content: start;
+                }
+
+                /* Category heading */
+                .category-section h2 {
+                    grid-column: 1 / -1;
+                }
+
+                /* Individual category cards */
+                .category-section .expense-card {
+                    padding: 18px;
+                    margin: 0;
+                }
+
+                .category-section .expense-card h3 {
+                    color: #60a5fa;
+                    margin-top: 0;
+                    font-size: 18px;
+                }
+
+                .category-section .expense-card p {
+                    font-size: 16px;
+                }
+
+            
+                .chart-section {
+                    background-color: #1f2937;
+                    padding: 20px;
+                    border-radius: 15px;
+                    align-self: start;
+                }
+
+                .chart-section h2 {
+                    color: #60a5fa;
+                    margin-top: 0;
+                    text-align: center;
+                }
+
+                .chart-section img {
+                    margin: 0 auto;
+                }
+
+
+                .chart-section img{
+                    display: block;
+                    width: 100%;
+                    max-width:450px ;
+                    height: auto;
+
+
+                }
+            
+            @media (max-width: 600px) {
+                body {
+                    padding: 15px;
+                }
+
+                .dashboard {
+                    grid-template-columns: 1fr;
+                }
+
+                .expense-card {
+                    padding: 18px;
+                }
+
+                h1 {
+                    font-size: 26px;
+                }
+}
+
+            
+
+            .budget-progress {
+                width: 100%;
+                height: 10px;
+                background-color: #374151;
+                border-radius: 10px;
+                overflow: hidden;
+                margin-top: 12px;
+            }
+
+            .budget-progress-fill {
+                height: 100%;
+                /* background-color: #22c55e; */
+                border-radius: 10px;
+                transition: width 0.3s ease
+            }
+
+            
+
+
+            input[type="number"],
+            input[type="text"] {
+                background-color: #1f2937;
+                color: white;
+                border: 1px solid #374151;
+                padding: 10px;
+                border-radius: 8px;
+                outline: none;
+                margin: 5px;
+            }
+
+            
+            input[type="number"]:focus,
+            input[type="text"]:focus {
+                border-color: #60a5fa;
+            }
+
+
+                    
+             
+            button,
+            input[type="submit"] {
+                background-color: #2563eb;
+                color: white;
+                padding: 10px 18px;
+                border: none;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 14px;
+                margin: 5px;
+            }
+
+            button:hover,
+            input[type="submit"]:hover {
+                background-color: #1d4ed8;
+            }
+                
+            
+            /* Add Expense and Set Budget forms */
+            form[action="/add"],
+            form[action="/setbudget"] {
+                background-color: #1f2937;
+                padding: 20px;
+                border-radius: 12px;
+                margin: 20px 0;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            /* Form labels */
+            form[action="/add"] label,
+            form[action="/setbudget"] label {
+                color: #d1d5db;
+                font-size: 14px;
+            }
+
+            .monthly-chart-section {
+                background-color: #1f2937;
+                padding: 25px;
+                border-radius: 15px;
+                margin-top: 30px;
+            }
+
+            .monthly-chart-section h2 {
+                color: #60a5fa;
+                text-align: center;
+                margin-top: 0;
+            }
+
+            .monthly-chart-section img {
+                display: block;
+                width: 100%;
+                max-width: 700px;
+                height: auto;
+                margin: 0 auto;
+            }
+
+            /* Category filter form */
+            form[action="/"] {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 12px;
+                background-color: #1f2937;
+                padding: 15px;
+                border-radius: 12px;
+                margin: 25px 0;
+            }
+
+            form[action="/"] label {
+                color: #d1d5db;
+                font-size: 14px;
+            }
+
+            form[action="/"] select {
+                background-color: #111827;
+                color: white;
+                border: 1px solid #374151;
+                padding: 10px;
+                border-radius: 8px;
+                outline: none;
+                cursor: pointer;
+            }
+
+            form[action="/"] select:focus {
+                border-color: #60a5fa;
+            }
+
+
+
+
+        </style>
+    </head>
+    <body>
+        <a href="/logout">Logout</a>
+        <h2>Add a New Expense</h2>
+
+        <form action="/add" method="POST">
+            <label>Amount (₹) </label>
+            <input type="number" name="amount" min="0.01" step="0.01" required>
+            <label>Category</label>
+            <input type="text" name="category" required>
+            <label>Description</label>
+            <input type="text" name="description" required>
+            <!-- <label>Date</label> -->
+            <!-- <input type="date" name="date"> -->
+            <input type="submit" value="Add Expense">
+
+
+        </form>
+        <h2>Set Monthly Budget</h2>
+        <form action="/setbudget" method="post">
+            <label>Monthly Budget</label>
+            <input type="number" name="budget" min="0.01" step="0.01" required>
+            <input type="submit" value="Set Budget">
+        </form>
+        <div class="dashboard">
+            <div class="expense-card">
+                <p class="card-label">Total Expenses</p>
+                <h1>₹{{ total }}</h1>
+                <p class="card-description">Your spending overview</p>
+            </div>
+            <div class="expense-card">
+                <p>Monthly Spending</p>
+                <h1>₹{{"%.2f"|format(monthly_spending)}}</h1>
+                <p class="card-description">Your Monthly Spendings</p>
+            </div>
+            <div class="expense-card">
+                <p>Remaining Budget</p>
+                <h1>₹{{"%.2f"|format(remaining_budget)}}</h1>
+                <p class="card-description">{{budget_status}}</p>
+                <p>Monthly Budget:₹
+                {{ "%.2f"|format(current_budget) }}</p>
+                <p>Budget used: {{ "%.1f"|format(budget_percentage) }}%</p>
+            
+                <div class="budget-progress">
+                    <div class="budget-progress-fill"
+                    style="width: {{budget_bar_width}}%;  background-color: {{budget_color}};">
+                    </div>
+                </div>
+            </div>
+            <div class="expense-card">
+                <p>Transactions</p>
+                <h1>{{transactions}}</h1>
+                <p class="card-description">Your Total Transactions</p>
+            </div>
+        </div>
+        <!-- filter by category -->
+        <form action="/" method="get">
+            <label>Filter By Category:</label>
+            <select name="category">
+                <option value="">All Categories</option>
+                {%for category in category_totals.keys()%}
+                    <option value="{{category}}">{{category}}</option>
+                {%endfor%}
+                </select>
+                <button type="submit">Fliter</button>
+            </form>
+<!-- All expenses -->
+        <h2>All Expenses</h2>
+        {% if expenses %}
+            {% for expense in expenses %}
+            <div class="expense-card transaction-card" >
+                <h3>₹{{"%.2f"|format(expense['amount'])}}</h3>
+                <p>Category:{{expense["category"]}}</p>
+                <p>Description:{{expense["description"]}}</p>
+                <p>Date:{{expense["date"]}}</p>
+                <p>Expense ID:{{expense["id"]}}</p>
+                <form action="/delete/{{expense['id']}}" method="Post">
+                    <input type="submit" value="Delete">
+                </form>
+                <!-- <form action="/edit/{{expense['id']}}" method="Post">
+                    <label>Amount (₹)</label>
+                     <input type="number" name="amount"
+                        value="{{ expense['amount'] }}" min="0.01"
+                        step="0.01" required>
+
+                    <label>Category</label>
+                    <input type="text" name="category"
+                        value="{{ expense['category'] }}" required>
+
+                    <label>Description</label>
+                    <input type="text" name="description"
+                        value="{{ expense['description'] }}" required>
+
+                    <button type="submit">Save Changes</button>
+                </form> -->
+
+             </div>
+            {%endfor%}
+        {%else%}
+             <p>No Expense Added yet.</p>
+        {%endif%} 
+        <div class="spendinglayout"> 
+            <div class="category-section">   
+            <h2>Category-wise Spending</h2>
+            {%if category_totals%}
+                {%for category,amount in category_totals.items()%}
+                <div class="expense-card">
+                    <h3>{{category}}</h3>
+                    <p class="card-description">₹{{"%.2f"|format(amount)}}</p>
+                </div>
+                {%endfor%}
+            {%else%}
+            <p>No Expense To Summarize yet.</p>
+            {%endif%}
+            </div>
+            <div class="chart-section">
+            <h2>Spending Breakdown</h2>
+            {%if category_chart%}
+                <img
+                    src="data:image/png;base64,{{ category_chart }}"
+                    alt="Pie chart showing spending by category"
+                    style="max-width:400px; width:100%"
+                    >
+
+            {%else%}
+                <p>Add Expense To See Your Spending Chart</p>
+            {%endif%}
+            </div>
+        </div>
+        <div class="monthly-chart-section">
+        <h2>Monthly Spending Trend</h2>
+
+        {% if monthly_chart %}
+            <img
+                src="data:image/png;base64,{{ monthly_chart }}"
+                alt="Bar chart showing monthly spending"
+ 
+            >
+        {% else %}
+            <p>Add expenses to see your monthly spending trend.</p>
+        {% endif %}
+        </div>
+
+
+
+
+
+
+
+
+
+
+        </body>
+</html>
+
+
+
+
+
+ 
